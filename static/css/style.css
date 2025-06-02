@@ -1,0 +1,270 @@
+:root {
+      --bg: #f9f9f9;
+      --text: #1e1e1e;
+      --input-bg: #fff;
+      --input-border: #ddd;
+      --user-msg: #e7f3ff;
+      --bot-msg: #ffffff;
+      --icon-color: #5c5c5c;
+    }
+
+    [data-theme="dark"] {
+      --bg: #343541;
+      --text: #ececf1;
+      --input-bg: #40414f;
+      --input-border: #3e3f4b;
+      --user-msg: #3b3e4a;
+      --bot-msg: #444654;
+      --icon-color: #b0b0b0;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    header {
+      width: 100%;
+      background: var(--input-bg);
+      border-bottom: 1px solid var(--input-border);
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+       position: fixed;
+    }
+
+
+.message-image {
+  max-width: 200px;
+  max-height: 200px;
+  display: block;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  object-fit: contain; /* 保持图片比例 */
+}
+.message-file-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+}
+
+    header img {
+      height: 30px;
+    }
+
+    .theme-toggle {
+      font-size: 0.9rem;
+      background: none;
+      border: 1px solid var(--input-border);
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    #main {
+      width: 100%;
+      max-width: 720px;
+      padding: 2rem 1rem 6rem;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    .message {
+      display: inline-block;
+      max-width: 80%;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.25rem;
+      border-radius: 1rem;
+      background-color: var(--bot-msg);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      line-height: 1.6;
+      font-size: 1rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      clear: both;
+    }
+
+    .message.user {
+      background-color: var(--user-msg);
+      float: right;
+      text-align: left;
+    }
+
+    .message.bot {
+      float: left;
+      text-align: left;
+    }
+
+    #input-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem;
+      background: var(--bg);
+      backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: center;
+      box-shadow: 0 -1px 6px rgba(0,0,0,0.05);
+    }
+
+    .input-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 720px;
+      background-color: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 12px;
+      padding: 0.5rem;
+      gap: 0.5rem;
+    }
+    .input-parent {
+      position: relative;
+      width: 100%;
+      max-width: 720px;
+      display: flex;
+      flex-direction: column;
+
+    }
+
+
+    .file-info {
+      font-size: 0.9rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      max-width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+        margin-bottom: 0.5rem;
+    }
+
+    .file-info img {
+      width: 30px;
+      height: 30px;
+    }
+    .file-info span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 1.0rem;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    textarea {
+      width: 100%;
+
+      font-size: 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text);
+      height: 40px;
+      resize: none;
+      outline: none;
+      border-color: var(--input-bg);
+    }
+
+    textarea:focus {
+      border-color: var(--input-bg);
+      outline: none; /* 隐藏聚焦时的边框 */
+    }
+
+    .icon-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.4rem;
+      border-radius: 8px;
+    }
+    .icon-button svg {
+        width: 25px;
+        height: 25px;
+    }
+    .icon-button svg path {
+       stroke:var(--text)
+    }
+
+
+    .icon-button:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .send-button {
+     background-color: #8adcff;
+      border-radius: 12px;
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+    }
+    .send-button:disabled {
+  background-color: #ccc;       /* 灰色背景 */
+  color: #666;                  /* 灰色文字 */
+  cursor: not-allowed;          /* 鼠标变为禁止符号 */
+  opacity: 0.6;                 /* 半透明 */
+  border: 1px solid #999;       /* 灰色边框 */
+    }
+
+    .send-button  svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .chat-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+
+
+
+.loading-spinner {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #10a37f;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+.header-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-weight: bold;
+}
