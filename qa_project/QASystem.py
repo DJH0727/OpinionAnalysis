@@ -1,10 +1,6 @@
 import json
 import os
-import time
-
-import requests
 import torch
-from requests import session
 from transformers import BlipProcessor, BlipForConditionalGeneration, BlipForQuestionAnswering
 
 from OpinionAnalysis.settings import BASE_DIR, STATIC_URL
@@ -12,7 +8,6 @@ from qa_project.question_understanding import ques_understanding
 import utils.common as common
 from utils.logger import Logger
 from PIL import Image
-
 
 logger = Logger(name='qa_project.QASystem')
 
@@ -29,6 +24,7 @@ def qa_get_reply(question,file_name=None):
     ans =search_answer(keywords)
     if ans is None:
         return "抱歉，没有找到答案。"
+
     #TODO: 图像描述（如果有）
     caption = ""
     if file_name:
@@ -91,8 +87,8 @@ def inference_answer_without_image(question,answers):
                 f"问题: {question}\n\n"
                 f"相关答案片段:\n{context}\n\n"
                 "请只根据提供的答案片段进行推理，不得添加与片段无关的内容。\n"
-                "请按json格式输出并且在字段中带上换行符，{\"answer\": \"...\", \"reason\": \"...\"}\n"
-                "其中answer字段为结论，reason字段为推理过程。\n"
+                "请按json格式输出，{\"answer\": \"...\", \"reason\": \"...\"}\n"
+                "其中answer字段为结论，reason字段为推理过程。字段中为markdown格式。\n"
             },
         ],
         stream=False,

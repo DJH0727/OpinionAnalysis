@@ -100,10 +100,6 @@
       text-align: left;
     }
 
-    .message.bot {
-      float: left;
-      text-align: left;
-    }
 
     #input-bar {
       position: fixed;
@@ -268,3 +264,21 @@
   font-size: 18px;
   font-weight: bold;
 }
+
+.message-bot {
+  display: inline-block;
+  clear: both;
+  max-width: 80%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+  border-radius: 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  background-color: var(--bot-msg);
+  line-height: 1.6;
+  font-size: 1rem;
+  word-wrap: break-word;     /* 换行 */
+  color: var(--text);               /* 文字颜色 */
+  float: left;               /* 左浮动 */
+  text-align: left;          /* 左对齐 */
+}
+

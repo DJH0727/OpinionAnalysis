@@ -43,7 +43,7 @@ const chatContainer = document.getElementById("main");
 
  // 创建机器人消息容器（等待回复）
       const botMsg = document.createElement("div");
-      botMsg.className = "message bot";
+      botMsg.className = "message-bot";
       chatContainer.appendChild(botMsg);
 
       input.value = "";
@@ -109,9 +109,11 @@ const chatContainer = document.getElementById("main");
     // 展示机器人消息
     function typeWriterEffect(element, text, speed = 10) {
       let i = 0;
+      let currentText = "";
       const interval = setInterval(() => {
-        element.textContent += text[i];
+        currentText += text[i];
         i++;
+        element.innerHTML = marked.parse(currentText);
         window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
         if (i >= text.length) clearInterval(interval);
       }, speed);
@@ -123,6 +125,7 @@ function updateHeaderStatus(statusText) {
   headerTitle.textContent = `舆情分析聊天机器人（${statusText}）`;
 }
 
+let pointNum = 0;
 function pollTaskStatus() {
   const intervalId = setInterval(function() {
     $.ajax({

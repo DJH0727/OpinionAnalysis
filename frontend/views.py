@@ -1,6 +1,4 @@
-import json
 import os
-import time
 import uuid
 
 from django.http import JsonResponse
@@ -32,6 +30,8 @@ def getReply(request):
     file_name = request.GET.get("fileName", "")
     logger.info("getReply: 文本: %s 类型: %s 文件名: %s",
                 text, op_type, file_name if file_name else "null")
+
+
     result = {}
     if file_name:
        file_type = common.get_file_type(file_name)
@@ -43,16 +43,15 @@ def getReply(request):
         result = qa_get_reply(question=text)
 
 
-
-    # 模拟返回结果
     answer = result.get("answer", "暂无答案")
     reason = result.get("reason", "暂无推理过程")
     caption = result.get("caption", "")
 
     if caption:
-        replyStr = f"图像描述: \n{caption}\n推理过程: \n{reason}\n结论: \n{answer}"
+        replyStr = f"## 图像描述: \n{caption}\n## 推理过程: \n{reason}\n## 结论: \n{answer}"
     else:
-        replyStr = f"推理过程: \n{reason}\n结论: \n{answer}"
+        replyStr = f"## 推理过程: \n{reason}\n## 结论: \n{answer}"
+
 
     response['status'] = 200
     response['replyType'] = 'text'#text, image, file
