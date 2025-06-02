@@ -47,7 +47,6 @@ const chatContainer = document.getElementById("main");
       chatContainer.appendChild(botMsg);
 
       input.value = "";
-      input.focus();
 
       const sendBtn = document.getElementById("send-button");
       sendBtn.disabled = true;
@@ -120,12 +119,22 @@ const chatContainer = document.getElementById("main");
     }
 
 
+let pointNum = 1;
+
 function updateHeaderStatus(statusText) {
   const headerTitle = document.getElementById("header-title");
-  headerTitle.textContent = `舆情分析聊天机器人（${statusText}）`;
+
+  if (statusText !== "空闲中") {
+    const dots = "·".repeat(pointNum);
+    headerTitle.textContent = `舆情分析聊天机器人（${statusText}${dots}）`;
+    pointNum = pointNum >= 3 ? 1 : pointNum + 1;
+  } else {
+    headerTitle.textContent = `舆情分析聊天机器人（${statusText}）`;
+    pointNum = 1; // 状态恢复空闲时，重置点数
+  }
 }
 
-let pointNum = 0;
+
 function pollTaskStatus() {
   const intervalId = setInterval(function() {
     $.ajax({
@@ -154,7 +163,12 @@ function pollTaskStatus() {
     document.getElementById("chat-input").addEventListener("keydown", function (e) {
       if (e.key === "Enter" && !e.shiftKey) {
         sendMessage();
-
+        //清空输入框
+        e.preventDefault();
+        e.stopPropagation();
+        e.target.value = "";
+        //失去焦点
+        e.target.blur();
       }
     });
 

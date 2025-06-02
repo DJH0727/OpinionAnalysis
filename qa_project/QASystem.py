@@ -77,18 +77,25 @@ def inference_answer_without_image(question,answers):
     response = client.chat.completions.create(
         model="deepseek-reasoner",#deepseek-chat
         messages=[
-            {"role": "system",
-             "content":"你是一个专业的舆情分析师。\n"
-             },
+            {
+                "role": "system",
+                "content": "你是一个专业的舆情分析师，擅长从多个文本片段中综合分析并得出准确结论。"
+            },
             {
                 "role": "user",
                 "content":
-                "请根据下面的问题和相关的多个答案片段，综合分析并给出最准确的回答。\n"
-                f"问题: {question}\n\n"
-                f"相关答案片段:\n{context}\n\n"
-                "请只根据提供的答案片段进行推理，不得添加与片段无关的内容。\n"
-                "请按json格式输出，{\"answer\": \"...\", \"reason\": \"...\"}\n"
-                "其中answer字段为结论，reason字段为推理过程。字段中为markdown格式。\n"
+                    "请你扮演舆情分析师，根据以下问题和多个相关的文本片段，推理出一个准确的结论。\n\n"
+                    f"问题：{question}\n\n"
+                    f"相关文本片段：\n{context}\n\n"
+                    "请注意：\n"
+                    "1. 请只根据提供的问题和文本片段进行推理，不得引入其他背景知识；\n"
+                    "2. 问题和文本片段直接可能不存在关联，请判断其关联性；\n"
+                    "3. 文本片段之间可能存在重复或矛盾，请合理判断其可信度和关联性；\n"
+                    "4. 输出格式必须为 JSON，对应字段如下：\n"
+                    "- answer：最终结论，总结为一段话；\n"
+                    "- reason：推理过程，用markdown语法解释如何得出结论；\n\n"
+                    "示例输出：\n"
+                    "{\"answer\": \"结论内容\", \"reason\": \"推理说明\"}"
             },
         ],
         stream=False,
