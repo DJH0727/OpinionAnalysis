@@ -1,5 +1,6 @@
 from doc_project.common_utils import get_doc_text, save_html_file
-from doc_project.generater import generate_pos_html_str, generate_pos_html_page
+from doc_project.generater import generate_pos_html_str, generate_pos_html_page, generate_ner_html_str, \
+    generate_ner_html_page
 from utils.loaded_model import tokenize_hanlp
 from utils.logger import Logger
 
@@ -25,8 +26,28 @@ def pos_analysis(file_name):
 
 
 def ner_analysis(file_name):
-    # 实体识别实现
-    pass
+    text = get_doc_text(file_name)
+    result = tokenize_hanlp(text)
+    tokens = result.get('tok/fine', [])
+    ner_tags = result.get('ner/msra', [])
+
+    tags = ['O'] * len(tokens)
+
+    for ent_text, ent_type, start_idx, end_idx in ner_tags:
+        # BIO格式标注，首字B-类型，后续I-类型
+        tags[start_idx] = 'B-' + ent_type
+        for i in range(start_idx + 1, end_idx):
+            tags[i] = 'I-' + ent_type
+
+    logger.info("ner_result: " + ", ".join([f"{tok}/{tag}" for tok, tag in zip(tokens, tags)]))
+
+    html = generate_ner_html_page(tokens, tags)
+    save_html_file("ner_analysis.html", html)
+    logger.info("实体识别结果页面已保存：ner_analysis.html")
+
+    preview_str = generate_ner_html_str(tokens, tags)
+    return preview_str
+
 
 def summarize_analysis(file_name):
     # 文档摘要实现
@@ -47,3 +68,4 @@ nlp_utils_funcs = {
     'text_mining': text_mining_analysis,
     'sentiment': sentiment_analysis,
 }
+

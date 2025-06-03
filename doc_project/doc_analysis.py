@@ -8,7 +8,7 @@ from doc_project.nlp_utils import nlp_utils_funcs
 logger = Logger("doc_project.doc_analysis")
 analysis_types = ['pos', 'ner', 'summarize', 'text_mining', 'sentiment']
 analysis_strs = ['词性标注', '实体识别', '生成摘要', '文本挖掘', '情感分析']
-analysis_output_files = ["pos_analysis.html"]
+analysis_output_files = ["pos_analysis.html", "ner_analysis.html", "summarize_analysis.html", "text_mining_analysis.html", "sentiment_analysis.html"]
 
 def doc_analysis_get_result(analysis_str, file_name):
     try:
