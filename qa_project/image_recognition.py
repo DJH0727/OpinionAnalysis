@@ -1,3 +1,5 @@
+import cv2
+import paddlehub as hub
 import torch
 from PIL import Image
 
@@ -54,3 +56,17 @@ def get_vqa_answer(image_path, questions):
         })
 
     return results
+
+
+def extract_text_from_image(image_path):
+    ocr = hub.Module(name="ch_pp-ocrv3", enable_mkldnn=True)
+    result = ocr.recognize_text(images=[cv2.imread(image_path)])
+
+    texts = []
+    if result and 'data' in result[0]:
+        for item in result[0]['data']:
+            texts.append(item['text'])
+
+    return texts
+
+

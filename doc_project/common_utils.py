@@ -146,7 +146,6 @@ def perform_clustering_and_visualization(texts_cleaned, num_clusters=5):
     plt.title('t-SNE 聚类可视化', fontproperties=FontProperties(fname=font_path) if font_path else None)
     plt.legend()
     tsne_path = os.path.join(output_dir, 'tsne_scatter.png')
-    print(f"保存 t-SNE 散点图到 {tsne_path}")
     plt.savefig(tsne_path, bbox_inches='tight')
     plt.close()
 

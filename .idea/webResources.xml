@@ -11,6 +11,7 @@
             <path value="file://$PROJECT_DIR$/utils/models/blip-vqa-base" />
             <path value="file://$PROJECT_DIR$/utils/models/Randeng-Pegasus-238M-Summary-Chinese" />
             <path value="file://$PROJECT_DIR$/utils/models/zh_sim_g2" />
+            <path value="file://$PROJECT_DIR$/utils/models/bge-base-zh" />
           </resourceRoots>
         </entryData>
       </entry>

@@ -81,23 +81,24 @@ def get_vqa_questions(caption, user_question=None, max_questions=5):
     return questions[:max_questions]
 
 
-def inference_answer_with_image(question, answers, caption,vqa_answers):
+def inference_answer_with_image(question, answers, caption,vqa_answers,text):
     logger.info(f"Inference (with image) question: {question}")
     context = "\n\n".join(f"文本{i + 1}: {ans}" for i, ans in enumerate(answers))
     vqa_context = "\n".join(f"Q{i + 1}: {qa['question']}\nA{i + 1}: {qa['answer']}" for i, qa in enumerate(vqa_answers))
     prompt = (
         "你是一位专业的舆情分析师，擅长结合文本与图像信息进行综合推理和分析。\n\n"
         f"问题：{question}\n\n"
+        f"图像文本识别结果：{text}\n\n"
         f"图像内容描述：{caption}\n\n"
         f"图像相关问答信息：\n{vqa_context}\n\n"
         f"相关文本片段：\n{context}\n\n"
         "请注意：\n"
-        "1. 请综合 问题、图像描述、图像问答信息、文本片段 进行推理，仅在这些信息的基础上作答；\n"
+        "1. 请综合 问题、图像文本识别结果、图像描述、图像问答信息、文本片段 进行推理，仅在这些信息的基础上作答；\n"
         "2. 图像和文本可能互相补充或存在矛盾，请合理判断其可信度；\n"
         "3. 图像描述要根据图像内容描述和相关问答信息进行准确描述，图像内容描述和问答信息可能存在歧义，不必过分解读；\n"
         "4. 除了你的答案，不要提供任何其他信息，包括引言或说明性句子；\n"
         "5. 输出格式必须为 markdown，对应字段如下：\n"
-        "- caption：图像描述，结合图像内容描述和相关问答信息进行准确描述，中文；\n"
+        "- caption：图像描述，结合图像文本识别结果、图像内容描述和相关问答信息进行准确描述，中文；\n"
         "- answer：最终结论，总结为一段话；\n"
         "- reason：推理过程，用markdown语法解释如何得出结论；\n\n"
         "示例输出：\n"

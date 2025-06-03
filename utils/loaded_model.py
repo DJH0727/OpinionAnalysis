@@ -1,6 +1,6 @@
 import os
 
-from transformers import BertTokenizer, BertModel
+from transformers import BertTokenizer, BertModel, AutoTokenizer, AutoModel
 import hanlp
 from utils.logger import Logger
 from transformers import BlipProcessor, BlipForConditionalGeneration, BlipForQuestionAnswering
@@ -38,3 +38,8 @@ vqa_model.eval()
 vqa_model.to("cpu")
 logger.info("load vqa model success")
 
+bge_model_path = os.path.join(BASE_DIR, "utils/models/bge-base-zh")
+bge_tokenizer = AutoTokenizer.from_pretrained(bge_model_path, local_files_only=True)
+bge_model = AutoModel.from_pretrained(bge_model_path, local_files_only=True)
+bge_model.eval()
+logger.info("load bge model success")

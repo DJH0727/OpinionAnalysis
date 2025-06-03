@@ -34,26 +34,49 @@ def getReply(request):
                 text, op_type, file_name if file_name else "null")
 
 
-    # result = {}
-    # if file_name:
-    #    file_type = common.get_file_type(file_name)
-    #    if file_type == "img":
-    #        result = qa_get_reply(question=text, file_name=file_name)
-    #    elif file_type == "doc":#包括txt,md,rtf,pdf,doc,docx
-    #        result = doc_analysis_get_result(text, file_name)
-    #    elif file_type == "unknown":
-    #        result = "暂不支持该类型文件"
-    # else:
-    #     result = qa_get_reply(question=text)
-    #
-    #
-    # replyStr = str(result)
+    result = {}
+    if file_name:
+       file_type = common.get_file_type(file_name)
+       if file_type == "img":
+           result = qa_get_reply(question=text, file_name=file_name)
+           response['status'] = 200
+           response['replyType'] = 'text'  # text, image, file
+           response['reply'] = str(result)
+           response['preview'] = ""
+           return JsonResponse(response)
+       elif file_type == "doc" :#包括txt,md,rtf,pdf,doc,docx
+           result = doc_analysis_get_result(text, file_name)
+           response['status'] = 200
+           response['replyType'] = 'file'  # text, image, file
+           response['reply'] = result['output_file']
+           response['preview'] = result['preview']
+           return JsonResponse(response)
+       elif file_type == "zip":
+           result = doc_analysis_get_result(text, file_name)
+           response['status'] = 200
+           response['replyType'] = 'file'  # text, image, file
+           response['reply'] = result['output_file']
+           response['preview'] = result['preview']
+           return JsonResponse(response)
+       elif file_type == "unknown":
+           response['status'] = 400
+           response['replyType'] = 'text'
+           response['reply'] = "文件类型不支持"
+           response['preview'] = ""
+           return JsonResponse(response)
+    else:
+        result = qa_get_reply(question=text)
+        response['status'] = 200
+        response['replyType'] = 'text'  # text, image, file
+        response['reply'] = str(result)
+        response['preview'] = ""
+        return JsonResponse(response)
 
-    result = doc_analysis_get_result(text, file_name)
+
     response['status'] = 200
-    response['replyType'] = 'file'#text, image, file
-    response['reply'] = result['output_file']
-    response['preview'] = result['preview']
+    response['replyType'] = 'text'#text, image, file
+    response['reply'] = "wrong"
+    response['preview'] = ''
     return JsonResponse(response)
 
 
