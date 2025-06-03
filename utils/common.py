@@ -17,10 +17,14 @@ def get_file_type(file_name):
 
     img_extensions = {"png", "jpg", "jpeg", "bmp", "gif", "webp", "tiff", "svg"}
     doc_extensions = {"doc", "docx", "txt", "md", "rtf", "pdf", "ppt", "pptx", "xls", "xlsx", "csv"}
+    zip_extensions = {"zip", "rar", "tar", "gz", "bz2", "7z"}
 
     if extension in img_extensions:
         return "img"
     elif extension in doc_extensions:
         return "doc"
+    elif extension in zip_extensions:
+        return "zip"
     else:
         return "unknown"
+

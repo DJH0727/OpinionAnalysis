@@ -21,7 +21,12 @@ function getFileCategory(file) {
     return "image";
   } else if (fileType === "text/plain" || fileName.endsWith(".txt")) {
     return "txt";
-  } else {
+  } else if (fileType.startsWith("application/zip") || fileName.endsWith(".zip") || fileName.endsWith(".rar") || fileName.endsWith(".tar") || fileName.endsWith(".gz") || fileName.endsWith(".bz2") || fileName.endsWith(".7z")) {
+    return "zip";
+  }else if (fileType === "text/html" || fileName.endsWith(".html")) {
+    return "html";
+  }
+  else {
     return "unknown";
   }
 }
@@ -38,7 +43,12 @@ function getFileCategoryByName (fileName) {
     return "image";
   } else if (fileType === "txt") {
     return "txt";
-  } else {
+  } else if (fileType === "zip"|| fileType === "rar"|| fileType === "tar"|| fileType === "gz"|| fileType === "bz2"|| fileType === "7z") {
+    return "zip";
+  }else  if (fileType === "html") {
+    return "html";
+  }
+  else {
     return "unknown";
   }
 }

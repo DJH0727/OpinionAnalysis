@@ -81,6 +81,7 @@ const chatContainer = document.getElementById("main");
                 fileIcon.alt = "file-icon";
                 fileIcon.className = "message-file-icon";
                 botMsg.appendChild(fileIcon);
+                //下载链接
                 const fileLink = document.createElement("a");
                 fileLink.textContent = response.reply;
                 fileLink.href = `/static/downloads/${encodeURIComponent(response.reply)}`;  // 文件下载链接，按实际调整
@@ -89,6 +90,21 @@ const chatContainer = document.getElementById("main");
                 fileLink.style.color = "#0066cc";  // 可自定义样式
                 fileLink.style.textDecoration = "underline";
                 botMsg.appendChild(fileLink);
+                // 预览
+                if (response.preview) {
+                    const previewBox = document.createElement("div");
+                    previewBox.className = "message-preview-box";
+                    previewBox.style.marginTop = "10px";
+                    previewBox.style.padding = "8px";
+                    previewBox.style.backgroundColor = "#f9f9f9";
+                    previewBox.style.borderLeft = "4px solid #0066cc";
+                    previewBox.style.borderRadius = "4px";
+                    previewBox.style.fontSize = "14px";
+                    previewBox.style.lineHeight = "1.6";
+                    previewBox.innerHTML = response.preview;  // 渲染 HTML 内容
+                    botMsg.appendChild(previewBox);
+                }
+
             }
             sendBtn.disabled = false;
             window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });

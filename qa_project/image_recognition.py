@@ -1,20 +1,11 @@
 import torch
-from transformers import BlipProcessor, BlipForConditionalGeneration, BlipForQuestionAnswering
 from PIL import Image
-from OpinionAnalysis.settings import BASE_DIR
-import os
+
+from utils.loaded_model import cap_processor, cap_model, vqa_processor, vqa_model
 from utils.logger import Logger
 
 logger = Logger("qa_project.image_recognition")
 
-# 加载模型
-#cap_model_path = "./resources/models/blip-image-captioning"
-cap_model_path = os.path.join(BASE_DIR, "qa_project/resources/models/blip-image-captioning")
-cap_processor = BlipProcessor.from_pretrained(cap_model_path, local_files_only=True)
-cap_model = BlipForConditionalGeneration.from_pretrained(cap_model_path, local_files_only=True)
-cap_model.eval()
-cap_model.to("cpu")
-logger.info("loading captioning model success")
 def captioning_image(image_path):
     #TODO: 图像描述
     image = Image.open(image_path).convert("RGB")
@@ -44,15 +35,6 @@ def captioning_image(image_path):
     logger.info(f"Caption: {caption}")
     return caption
 
-
-
-#vqa_model_path = "./resources/models/blip-vqa-base"
-vqa_model_path = os.path.join(BASE_DIR, "qa_project/resources/models/blip-vqa-base")
-vqa_processor = BlipProcessor.from_pretrained(vqa_model_path, local_files_only=True)
-vqa_model = BlipForQuestionAnswering.from_pretrained(vqa_model_path, local_files_only=True)
-vqa_model.eval()
-vqa_model.to("cpu")
-logger.info("loading vqa model success")
 
 
 def get_vqa_answer(image_path, questions):

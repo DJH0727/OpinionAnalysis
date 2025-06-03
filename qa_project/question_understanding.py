@@ -4,19 +4,16 @@ import hanlp
 import re
 
 from OpinionAnalysis.settings import BASE_DIR
+from utils.loaded_model import tokenize_hanlp, tokenizer_bert, model_bert
 from utils.logger import Logger
 from transformers import BertTokenizer, BertModel
 import torch
 from sklearn.metrics.pairwise import cosine_similarity
 logger = Logger(name='question_understanding')
 
-# 加载HanLP的分词模型和BERT预训练模型
-tokenizer = hanlp.load(hanlp.pretrained.mtl.CLOSE_TOK_POS_NER_SRL_DEP_SDP_CON_ELECTRA_SMALL_ZH)
-bert_model_path = os.path.join(BASE_DIR, 'qa_project/resources/models/bert-base-cn')
-tokenizer_bert = BertTokenizer.from_pretrained(bert_model_path,local_files_only=True)
-model_bert = BertModel.from_pretrained(bert_model_path,local_files_only=True)
-model_bert.eval()
-logger.info("loaded bert model success")
+
+
+
 def load_stopwords(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         return set(line.strip() for line in f)
@@ -35,7 +32,7 @@ def clean_text(text: str) -> str:
     return text
 
 def segment_text(text: str):
-    return tokenizer(text)
+    return tokenize_hanlp(text)
 
 def extract_keywords_hanlp_bert(filtered_words, text, top_k=5):
     # 用 BERT 得到每个词的向量（取词对应的第一个token的embedding）
