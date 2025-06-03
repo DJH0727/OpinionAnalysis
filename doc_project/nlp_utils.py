@@ -1,5 +1,5 @@
 from doc_project.common_utils import get_doc_text, save_html_file
-from utils.generater import generate_pos_html_str, generate_pos_html_page
+from doc_project.generater import generate_pos_html_str, generate_pos_html_page
 from utils.loaded_model import tokenize_hanlp
 from utils.logger import Logger
 
