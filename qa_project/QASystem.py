@@ -51,15 +51,8 @@ def qa_get_reply(question,file_name=None):
         inference_result = inference_answer_without_image(question, ans)
     common.current_reply_status = "finished"
 
-    result = json.loads(inference_result['content'])
-    answer = result['answer']
-    reason = result['reason']
-    ai_caption = result.get('caption', '')
-    return {
-        "answer": answer,
-        "reason": reason,
-        "caption": ai_caption
-    }
+    result = inference_result['content']
+    return result
 
 
 

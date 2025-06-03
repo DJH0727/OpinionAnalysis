@@ -26,11 +26,12 @@ def inference_answer_without_image(question,answers):
                     "1. 请只根据提供的问题和文本片段进行推理，不得引入其他背景知识；\n"
                     "2. 问题和文本片段直接可能不存在关联，请判断其关联性；\n"
                     "3. 文本片段之间可能存在重复或矛盾，请合理判断其可信度和关联性；\n"
-                    "4. 输出格式必须为 JSON，对应字段如下：\n"
+                    "4. 除了你的答案，不要提供任何其他信息，包括引言或说明性句子；\n"
+                    "5. 输出格式必须为 markdown，对应字段如下：\n"
                     "- answer：最终结论，总结为一段话；\n"
                     "- reason：推理过程，用markdown语法解释如何得出结论；\n\n"
                     "示例输出：\n"
-                    "{\"answer\": \"结论内容\", \"reason\": \"推理说明\"}"
+                    "## 推理过程: \n{reason}\n## 结论: \n{answer}"
             },
         ],
         stream=False,
@@ -94,12 +95,13 @@ def inference_answer_with_image(question, answers, caption,vqa_answers):
         "1. 请综合 问题、图像描述、图像问答信息、文本片段 进行推理，仅在这些信息的基础上作答；\n"
         "2. 图像和文本可能互相补充或存在矛盾，请合理判断其可信度；\n"
         "3. 图像描述要根据图像内容描述和相关问答信息进行准确描述，图像内容描述和问答信息可能存在歧义，不必过分解读；\n"
-        "4. 输出格式必须为 JSON，对应字段如下：\n"
-        "-caption：图像描述，中文；\n"
+        "4. 除了你的答案，不要提供任何其他信息，包括引言或说明性句子；\n"
+        "5. 输出格式必须为 markdown，对应字段如下：\n"
+        "- caption：图像描述，结合图像内容描述和相关问答信息进行准确描述，中文；\n"
         "- answer：最终结论，总结为一段话；\n"
         "- reason：推理过程，用markdown语法解释如何得出结论；\n\n"
         "示例输出：\n"
-        "{\"caption\": \"图像描述\", \"answer\": \"结论内容\", \"reason\": \"推理说明\"}"
+        "## 图像描述：\n{caption}\n## 推理过程: \n{reason}\n## 结论: \n{answer}"
     )
 
     response = client.chat.completions.create(

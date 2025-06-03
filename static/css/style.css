@@ -42,6 +42,7 @@
       justify-content: space-between;
       align-items: center;
        position: fixed;
+        z-index: 1000; /* 确保最上层 */
     }
 
 
@@ -100,6 +101,7 @@ background: var(--tips-bg);
   margin-top: 32px;
   color: var(--text);                /* 文字颜色 */
   box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* 轻微阴影 */
+
 }
 #chat-box {
 width: 100%;

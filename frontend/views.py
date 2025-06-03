@@ -38,20 +38,12 @@ def getReply(request):
        if file_type == "img":
            result = qa_get_reply(question=text, file_name=file_name)
        elif file_type == "unknown":
-           result = {"answer": "暂不支持该文件类型","reason": "暂不支持该文件类型"}
+           result = "暂不支持该类型文件"
     else:
         result = qa_get_reply(question=text)
 
 
-    answer = result.get("answer", "暂无答案")
-    reason = result.get("reason", "暂无推理过程")
-    caption = result.get("caption", "")
-
-    if caption:
-        replyStr = f"## 图像描述: \n{caption}\n## 推理过程: \n{reason}\n## 结论: \n{answer}"
-    else:
-        replyStr = f"## 推理过程: \n{reason}\n## 结论: \n{answer}"
-
+    replyStr = str(result)
 
     response['status'] = 200
     response['replyType'] = 'text'#text, image, file
