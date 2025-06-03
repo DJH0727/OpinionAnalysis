@@ -80,7 +80,7 @@ def uploadFile(request):
 
     return JsonResponse({'error': '无效的请求'}, status=400)
 
-
+@csrf_exempt
 def getReplyStatus(request):
     response = {
         "status": 200,

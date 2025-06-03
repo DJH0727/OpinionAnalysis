@@ -89,7 +89,7 @@
   width: 100%;
   height: calc(100vh - 150px); /* 自行调整高度 */
 }
-#hint-box {
+#hint-box-left {
   position: fixed;
   top: 0;
   left: 0;
@@ -102,6 +102,19 @@ background: var(--tips-bg);
   color: var(--text);                /* 文字颜色 */
   box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* 轻微阴影 */
 
+}
+#hint-box-right {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 24%;
+  height: 82%;
+  background: var(--tips-bg);
+  padding: 1rem;
+  box-sizing: border-box;
+  margin-top: 32px;
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 #chat-box {
 width: 100%;
