@@ -7,3 +7,5 @@ blip-vqa-base:https://huggingface.co/Salesforce/blip-vqa-base/tree/main
 bert-base-chinese:https://huggingface.co/google-bert/bert-base-chinese
 
 blip-image-captioning-large:https://huggingface.co/Salesforce/blip-image-captioning-large/tree/main
+
+bart-base-chinese:https://huggingface.co/fnlp/bart-base-chinese/tree/main

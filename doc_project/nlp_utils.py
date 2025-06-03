@@ -1,6 +1,12 @@
-from doc_project.common_utils import get_doc_text, save_html_file
+import os
+
+from hanlp_restful import HanLPClient
+
+from OpinionAnalysis.settings import BASE_DIR
+from doc_project.common_utils import get_doc_text, save_html_file, save_txt_file, unzip_file, read_all_csv_files, \
+    read_and_combine_csv_files, preprocess_texts, perform_clustering_and_visualization, zip_visualization_results
 from doc_project.generater import generate_pos_html_str, generate_pos_html_page, generate_ner_html_str, \
-    generate_ner_html_page
+    generate_ner_html_page, generate_text_mining_html_str
 from utils.loaded_model import tokenize_hanlp
 from utils.logger import Logger
 
@@ -48,14 +54,39 @@ def ner_analysis(file_name):
     preview_str = generate_ner_html_str(tokens, tags)
     return preview_str
 
-
-def summarize_analysis(file_name):
-    # 文档摘要实现
-    pass
+HanLP = HanLPClient('https://www.hanlp.com/api', auth=None, language='zh')
+def summarize_analysis(file_name ):
+    # 摘要生成实现
+    text = get_doc_text(file_name)
+    summary = HanLP.abstractive_summarization(text)
+    logger.info("摘要: " + summary)
+    save_txt_file("summarize_analysis.txt", summary)
+    return summary
 
 def text_mining_analysis(file_name):
     # 文本挖掘实现
-    pass
+    #1. 解压文件
+    temp_dir = os.path.join(BASE_DIR, 'static', 'uploads', 'temp')
+    file_path = os.path.join(BASE_DIR,'static', 'uploads', file_name)
+    unzip_file(file_path, temp_dir)
+    #2. 读取文件,获取所有csv文件路径
+    file_paths = read_all_csv_files(temp_dir)
+    #3. 读取csv文件内容，进行分析
+    combined_df = read_and_combine_csv_files([file_path for file_path, _ in file_paths])
+    #4. 文本预处理
+    raw_texts = combined_df['text'].dropna().astype(str).tolist()
+    texts_cleaned = preprocess_texts(raw_texts)
+    #5. 文本挖掘分析
+    perform_clustering_and_visualization(texts_cleaned, num_clusters=5)
+
+    #6. 生成HTML
+    preview_str = generate_text_mining_html_str()
+
+    #7. 打包压缩文件
+    zip_visualization_results('text_mining_analysis.zip')
+    return preview_str
+
+
 
 def sentiment_analysis(file_name):
     # 情感分析实现
@@ -68,4 +99,5 @@ nlp_utils_funcs = {
     'text_mining': text_mining_analysis,
     'sentiment': sentiment_analysis,
 }
+
 

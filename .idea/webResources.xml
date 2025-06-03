@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebResourcesPaths">
+    <contentEntries>
+      <entry url="file://$PROJECT_DIR$">
+        <entryData>
+          <resourceRoots>
+            <path value="file://$PROJECT_DIR$/utils/models" />
+            <path value="file://$PROJECT_DIR$/utils/models/bert-base-cn" />
+            <path value="file://$PROJECT_DIR$/utils/models/blip-image-captioning" />
+            <path value="file://$PROJECT_DIR$/utils/models/blip-vqa-base" />
+            <path value="file://$PROJECT_DIR$/utils/models/Randeng-Pegasus-238M-Summary-Chinese" />
+            <path value="file://$PROJECT_DIR$/utils/models/zh_sim_g2" />
+          </resourceRoots>
+        </entryData>
+      </entry>
+    </contentEntries>
+  </component>
+</project>

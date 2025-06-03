@@ -222,3 +222,24 @@ def generate_ner_html_page(tokens, tags, title="命名实体识别结果"):
 </html>
 """
     return html
+
+
+def generate_text_mining_html_str(output_dir="/static/downloads/", num_clusters=5):
+    html = f"""
+    <div class="text-mining-result">
+        <div class="image-block">
+            <h3>t-SNE 聚类可视化</h3>
+            <img src="{output_dir}/tsne_scatter.png" alt="t-SNE 聚类图" style="max-width: 100%; border: 1px solid #ccc;" />
+        </div>
+    """
+
+    for i in range(num_clusters):
+        html += f"""
+        <div class="image-block">
+            <h4>Cluster {i} 词云图</h4>
+            <img src="{output_dir}/cluster_{i}_wordcloud.png" alt="Cluster {i} 词云图" style="max-width: 100%; border: 1px solid #ccc;" />
+        </div>
+        """
+
+    html += "</div>"
+    return html
