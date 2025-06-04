@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET
 
 from doc_project.doc_analysis import doc_analysis_get_result
+from doc_project.doc_utils import transform_docx
 from qa_project.QASystem import qa_get_reply
 from utils import common
 from utils.logger import Logger
@@ -45,6 +46,13 @@ def getReply(request):
            response['preview'] = ""
            return JsonResponse(response)
        elif file_type == "doc" :#包括txt,md,rtf,pdf,doc,docx
+           if text == "转换docx":
+               result = transform_docx(file_name)
+               response['status'] = 200
+               response['replyType'] = 'file'  # text, image, file
+               response['reply'] = result['output_file']
+               response['preview'] = result['preview']
+               return JsonResponse(response)
            result = doc_analysis_get_result(text, file_name)
            response['status'] = 200
            response['replyType'] = 'file'  # text, image, file

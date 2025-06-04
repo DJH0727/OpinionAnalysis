@@ -1,17 +1,11 @@
-import json
 import os
 import pickle
-import sys
-
-import django
 import numpy as np
 import torch
-from django.db.models import Q, Value, IntegerField, Case, When, F, ExpressionWrapper
 from sklearn.metrics.pairwise import cosine_similarity
 
 from OpinionAnalysis.settings import STATIC_URL, BASE_DIR
 from frontend.models import QAData
-#from frontend.models import QAData
 from qa_project.deepseek import inference_answer_without_image, inference_answer_with_image, get_vqa_questions
 from qa_project.image_recognition import get_vqa_answer, captioning_image, extract_text_from_image
 from qa_project.question_understanding import ques_understanding

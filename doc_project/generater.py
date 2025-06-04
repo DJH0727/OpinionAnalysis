@@ -243,3 +243,80 @@ def generate_text_mining_html_str(output_dir="/static/downloads/", num_clusters=
 
     html += "</div>"
     return html
+
+
+
+
+
+def structured_data_to_html(structured_data, is_preview=False):
+    html_parts = [
+        '<html>',
+        '<head>',
+        '<meta charset="utf-8">',
+        '<title>文档展示</title>',
+        '<style>',
+        '''
+        #docx-viewer {
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        #docx-viewer p {
+            margin-bottom: 1em;
+        }
+        #docx-viewer table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+        #docx-viewer table, #docx-viewer th, #docx-viewer td {
+            border: 1px solid #aaa;
+        }
+        #docx-viewer td {
+            padding: 8px;
+            vertical-align: top;
+        }
+        #docx-viewer img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 16px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        ''',
+        '</style>',
+        '</head>',
+        '<body>',
+        '<div id="docx-viewer">'
+    ]
+
+    for item in structured_data:
+        if item['type'] == 'paragraph':
+            font_size = item.get('font_size', 12)
+            if font_size is None:
+                font_size = 12
+            text = item.get('text', '')
+            font_size_px = int(font_size * 1.33)
+            html_parts.append(f'<p style="font-size:{font_size_px}px;">{text}</p>')
+
+        elif item['type'] == 'table':
+            html_parts.append('<table>')
+            for row in item['data']:
+                html_parts.append('<tr>')
+                for cell in row:
+                    html_parts.append(f'<td>{cell}</td>')
+                html_parts.append('</tr>')
+            html_parts.append('</table>')
+
+        elif item['type'] == 'image':
+            path = item.get('path', '')
+            if is_preview:
+                path = f'/static/downloads/{path}'
+            html_parts.append(f'<img src="{path}" alt="图片">')
+
+    html_parts.append('</div></body></html>')
+
+    return '\n'.join(html_parts)

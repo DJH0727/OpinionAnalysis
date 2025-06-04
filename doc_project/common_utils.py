@@ -1,6 +1,7 @@
 import os
 import random
 import re
+import json
 import shutil
 import zipfile
 import matplotlib.pyplot as plt
@@ -42,6 +43,9 @@ def save_html_file(filename, html_str):
 def save_txt_file(filename, text):
     with open(os.path.join(output_dir, filename), "w", encoding="utf-8") as f:
         f.write(text)
+def save_json_file(filename, data):
+    with open(os.path.join(output_dir, filename), "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
 
 #解压文件
 def unzip_file(zip_path, extract_dir='temp_extract'):
